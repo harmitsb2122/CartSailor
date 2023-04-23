@@ -6,6 +6,8 @@ import Register from "./pages/Auth/Register";
 import Login from "./pages/Auth/Login";
 import PrivateRoute from "./components/Routes/Private";
 import Dashboard from "./pages/User/Dashboard";
+import AdminRoute from "./components/Routes/AdminRoute";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 const App = () => {
   return (
@@ -13,7 +15,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
-          <Route path="" element={<Dashboard />} />
+          <Route path="user" element={<Dashboard />} />
+        </Route>
+        <Route path="/dashboard" element={<AdminRoute />}>
+          <Route path="admin" element={<AdminDashboard />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
