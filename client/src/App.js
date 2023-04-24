@@ -8,6 +8,10 @@ import PrivateRoute from "./components/Routes/Private";
 import Dashboard from "./pages/User/Dashboard";
 import AdminRoute from "./components/Routes/AdminRoute";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import CreateProduct from "./pages/Admin/CreateProduct";
+import Users from "./pages/Admin/Users";
+import Orders from "./pages/User/Orders";
+import Profile from "./pages/User/Profile";
 
 const App = () => {
   return (
@@ -16,9 +20,13 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
+          <Route path="user/orders" element={<Orders />} />
+          <Route path="user/profile" element={<Profile />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
+          <Route path="admin/create-product" element={<CreateProduct />} />
+          <Route path="admin/users" element={<Users />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
