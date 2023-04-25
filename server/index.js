@@ -7,12 +7,21 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import mysql from "mysql2";
+
 //configure env
 dotenv.config();
 
 //database config
 connectDB();
 
+//sql config
+const db = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "harmit@123",
+  database: "e-commerce",
+});
 const app = express();
 
 //middlewares
@@ -25,8 +34,21 @@ app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/product", productRoutes);
 
+// app.get("/payment", (req, res) => {
+//   const sqlCheck =
+//     "SELECT * FROM payment_card WHERE card_number = '11111111111111' AND cvv='111' AND user_id='user_id' AND bank_id='bank_id'";
+//   db.query(sqlCheck, (err, result) => {
+//     console.log("error", err);
+//     console.log("result", result);
+//   });
+// });
 //REST api
 app.get("/", (req, res) => {
+  // const sqlInsert = "INSERT INTO payment_card (card_number,cvv,user_id,bank_id) VALUES ('11111111111111','111','user_id','bank_id')";
+  // db.query(sqlInsert,(err,result)=>{
+  //   console.log("error",err);
+  //   console.log("result",result);
+  // })
   res.send("<h1>Welcome to ecommerce app</h1>");
 });
 

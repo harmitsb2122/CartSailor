@@ -25,16 +25,16 @@ const ProductDetails = () => {
   return (
     <Layout>
       <div className="row container mt-2">
-        <div className="col-md-6">
+        <div className="col-md-5">
           <img
             src={`${process.env.REACT_APP_API}/api/product/product-photo/${product._id}`}
             className="card-img-top"
             alt={product.name}
-            height="300"
-            width={"350px"}
+            height="500px"
+            width={"300px"}
           />
         </div>
-        <div className="col-md-6 ">
+        <div className="col-md-7">
           <h1 className="text-center">Product Details</h1>
           <h6>Name : {product.name}</h6>
           <h6>Description : {product.description}</h6>

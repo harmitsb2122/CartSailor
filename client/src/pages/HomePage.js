@@ -120,18 +120,20 @@ const HomePage = () => {
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
             {categories?.map((c) => (
-              <Checkbox
-                key={c._id}
-                onChange={(e) => handleFilter(e.target.checked, c._id)}
-              >
-                {c.name}
-              </Checkbox>
+              <div className="container">
+                <Checkbox
+                  key={c._id}
+                  onChange={(e) => handleFilter(e.target.checked, c._id)}
+                >
+                  {c.name}
+                </Checkbox>
+              </div>
             ))}
           </div>
-
+          <br />
           <div className="d-flex flex-column">
             <button
-              className="btn btn-danger"
+              className="btn btn-primary"
               onClick={() => window.location.reload()}
             >
               RESET FILTERS
