@@ -34,7 +34,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/product", productRoutes);
 
-// app.get("/payment", (req, res) => {
+// app.put("/payment/:id", (req, res) => {
 //   const sqlCheck =
 //     "SELECT * FROM payment_card WHERE card_number = '11111111111111' AND cvv='111' AND user_id='user_id' AND bank_id='bank_id'";
 //   db.query(sqlCheck, (err, result) => {
@@ -42,6 +42,18 @@ app.use("/api/product", productRoutes);
 //     console.log("result", result);
 //   });
 // });
+
+// Inserting into local db
+// app.get("/insertOnce", (req, res) => {
+//   const sqlInsert =
+//     "INSERT INTO payment_card (card_number,cvv,user_id,bank_id,balance) VALUES ('1111222233334440','120','64481dd5035e0065480d4443','SBIN002',5000)";
+//   db.query(sqlInsert, (err, result) => {
+//     console.log("error", err);
+//     console.log("result", result);
+//   });
+//   res.send("<h1>Data Inserted</h1>");
+// });
+
 //REST api
 app.get("/", (req, res) => {
   // const sqlInsert = "INSERT INTO payment_card (card_number,cvv,user_id,bank_id) VALUES ('11111111111111','111','user_id','bank_id')";

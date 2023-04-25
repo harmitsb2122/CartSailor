@@ -89,6 +89,16 @@ const CartPage = () => {
                 <div className="mb-3">
                   <h5>Destination : {auth?.user?.address}</h5>
                 </div>
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={() => {
+                    navigate("/payment", {
+                      state: "/cart",
+                    });
+                  }}
+                >
+                  Order
+                </button>
               </>
             ) : (
               <div className="mb-3">
