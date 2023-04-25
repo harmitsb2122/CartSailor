@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../context/Auth";
 import { toast } from "react-hot-toast";
-
+import SearchInput from "./Form/SearchInput";
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const handleLogout = () => {
@@ -23,6 +23,7 @@ const Header = () => {
               E-COMMERCE STORE
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <SearchInput />
               <li className="nav-item">
                 <NavLink to="/" className="nav-link" href="#">
                   Home
