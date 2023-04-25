@@ -23,7 +23,7 @@ app.use(morgan("dev"));
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
-app.use("/api/products", productRoutes);
+app.use("/api/product", productRoutes);
 
 //REST api
 app.get("/", (req, res) => {
