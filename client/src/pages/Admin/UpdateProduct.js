@@ -99,7 +99,7 @@ const UpdateProduct = () => {
       const { data } = await axios.delete(
         `${process.env.REACT_APP_API}/api/product/delete-product/${id}`
       );
-      toast.success("Product DEleted Succfully");
+      toast.success("Product Deleted Successfully");
       navigate("/dashboard/admin/products");
     } catch (error) {
       console.log(error);
