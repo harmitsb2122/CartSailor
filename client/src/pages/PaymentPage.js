@@ -14,11 +14,17 @@ const PaymentPage = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [cvv, setCvv] = useState("");
   const [bankId, setBankId] = useState("");
-
+  const [uid, setUserId] = useState("");
+  const navigate = useNavigate();
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUserId(auth.user._id);
     try {
+      if (!auth || !auth.token) {
+        toast.error("Please Login First");
+        navigate("/login");
+      }
       if (!cart) {
         toast.error("Cart can't be empty");
         return;
@@ -29,9 +35,11 @@ const PaymentPage = () => {
         cvv,
         bankId,
         cart,
+        uid,
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
+        toast.success(`Your current balance is : Rs ${res.data.balance}`);
       } else {
         toast.error(res.data.message);
       }

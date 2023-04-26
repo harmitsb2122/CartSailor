@@ -263,32 +263,3 @@ export const searchProductController = async (req, res) => {
     });
   }
 };
-
-//payment
-export const paymentController = async (req, res) => {
-  try {
-    const {cart,id} = req.body;
-    if(!id || !cart)
-    {
-      res.status(400).send({
-        success: false,
-        message: "Invalid Order",
-        error,
-      }); 
-    }
-    let total = 0;
-    cart.map((i) => {
-      total += i.price;
-    });
-    
-    
-
-  } catch (error) {
-    console.log(error);
-    res.status(400).send({
-      success: false,
-      message: "Error In Payment API",
-      error,
-    });
-  }
-};

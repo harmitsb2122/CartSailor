@@ -8,7 +8,7 @@ import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import mysql from "mysql2";
-
+import orderModel from "./models/orderModel.js";
 //configure env
 dotenv.config();
 
@@ -36,7 +36,7 @@ app.use("/api/product", productRoutes);
 
 app.post("/api/payment", (req, res) => {
   try {
-    const { name, cardNumber, cvv, bankId, cart } = req.body;
+    const { name, cardNumber, cvv, bankId, cart, uid } = req.body;
     let total = 0;
     cart.map((i) => {
       total += i.price;
@@ -66,11 +66,17 @@ app.post("/api/payment", (req, res) => {
       let rem = result[0].balance - total;
       const userUpdate = `UPDATE payment_card SET balance=${rem} WHERE card_number='${cardNumber}' AND cvv='${cvv}' AND name='${name}' AND bank_id='${bankId}'`;
 
-      db.query(userUpdate, (err, result) => {
+      db.query(userUpdate, async (err, result) => {
         try {
+          const order = await new orderModel({
+            products: cart,
+            orderTotal: total,
+            buyer: uid,
+          }).save();
           res.status(200).send({
             success: true,
             message: "Payment Success",
+            balance: rem,
           });
         } catch {
           res.status(400).send({
@@ -103,11 +109,6 @@ app.post("/api/payment", (req, res) => {
 
 //REST api
 app.get("/", (req, res) => {
-  // const sqlInsert = "INSERT INTO payment_card (card_number,cvv,user_id,bank_id) VALUES ('11111111111111','111','user_id','bank_id')";
-  // db.query(sqlInsert,(err,result)=>{
-  //   console.log("error",err);
-  //   console.log("result",result);
-  // })
   res.send("<h1>Welcome to ecommerce app</h1>");
 });
 
