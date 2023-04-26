@@ -2,41 +2,42 @@ import React from "react";
 import Layout from "../components/Layout";
 import { useCart } from "../context/Cart";
 import { useAuth } from "../context/Auth";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+
 const PaymentPage = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
   const [name, setName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [cvv, setCvv] = useState("");
-  const [BankId, setBankId] = useState("");
+  const [bankId, setBankId] = useState("");
 
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      //   const res = await axios.post(
-      //     `${process.env.REACT_APP_API}/api/auth/login`,
-      //     {
-      //       email,
-      //       password,
-      //     }
-      //   );
-      //   if (res && res.data.success) {
-      //     toast.success(res.data && res.data.message);
-      //     setAuth({
-      //       ...auth,
-      //       user: res.data.user,
-      //       token: res.data.token,
-      //     });
-      //     localStorage.setItem("auth", JSON.stringify(res.data));
-      //     navigate(location.state || "/");
-      //   } else {
-      //     toast.error(res.data.message);
-      //   }
+      if (!cart) {
+        toast.error("Cart can't be empty");
+        return;
+      }
+      const res = await axios.post(`${process.env.REACT_APP_API}/api/payment`, {
+        name,
+        cardNumber,
+        cvv,
+        bankId,
+        cart,
+      });
+      if (res && res.data.success) {
+        toast.success(res.data && res.data.message);
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
       console.log(error);
-      //   toast.error("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
   return (
@@ -82,7 +83,7 @@ const PaymentPage = () => {
           <div className="mb-3">
             <input
               type="text"
-              value={BankId}
+              value={bankId}
               onChange={(e) => setBankId(e.target.value)}
               className="form-control"
               id="exampleInputPassword1"

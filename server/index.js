@@ -34,19 +34,66 @@ app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/product", productRoutes);
 
-// app.put("/payment/:id", (req, res) => {
-//   const sqlCheck =
-//     "SELECT * FROM payment_card WHERE card_number = '11111111111111' AND cvv='111' AND user_id='user_id' AND bank_id='bank_id'";
-//   db.query(sqlCheck, (err, result) => {
-//     console.log("error", err);
-//     console.log("result", result);
-//   });
-// });
+app.post("/api/payment", (req, res) => {
+  try {
+    const { name, cardNumber, cvv, bankId, cart } = req.body;
+    let total = 0;
+    cart.map((i) => {
+      total += i.price;
+    });
+
+    const userCheck = `SELECT * FROM payment_card WHERE card_number='${cardNumber}' AND cvv='${cvv}' AND name='${name}' AND bank_id='${bankId}' AND balance>=${total}`;
+    db.query(userCheck, (err, result) => {
+      if (err) {
+        console.log("error", err);
+        res.status(400).send({
+          success: false,
+          message: "Error In Payment API",
+          err,
+        });
+        return;
+      }
+      if (!result) {
+        console.log(userCheck);
+        console.log("error invalid order");
+        res.status(400).send({
+          success: false,
+          message: "Invalid Order",
+          err: "invalid order",
+        });
+        return;
+      }
+      let rem = result[0].balance - total;
+      const userUpdate = `UPDATE payment_card SET balance=${rem} WHERE card_number='${cardNumber}' AND cvv='${cvv}' AND name='${name}' AND bank_id='${bankId}'`;
+
+      db.query(userUpdate, (err, result) => {
+        try {
+          res.status(200).send({
+            success: true,
+            message: "Payment Success",
+          });
+        } catch {
+          res.status(400).send({
+            success: true,
+            message: "An Error occured in Database",
+          });
+        }
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error In Payment API",
+      error,
+    });
+  }
+});
 
 // Inserting into local db
 // app.get("/insertOnce", (req, res) => {
 //   const sqlInsert =
-//     "INSERT INTO payment_card (card_number,cvv,user_id,bank_id,balance) VALUES ('1111222233334440','120','64481dd5035e0065480d4443','SBIN002',5000)";
+//     "INSERT INTO payment_card (card_number,cvv,name,bank_id,balance) VALUES ('1111222233334441','121','John','SBIN001',500000)";
 //   db.query(sqlInsert, (err, result) => {
 //     console.log("error", err);
 //     console.log("result", result);

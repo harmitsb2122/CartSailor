@@ -1,7 +1,7 @@
 import productModel from "../models/productModel.js";
 import fs from "fs";
 import slugify from "slugify";
-
+import mysql from "mysql2";
 export const createProductController = async (req, res) => {
   try {
     const { name, description, price, category, quantity, shipping } =
@@ -245,7 +245,7 @@ export const productListController = async (req, res) => {
 export const searchProductController = async (req, res) => {
   try {
     const { keyword } = req.params;
-    const resutls = await productModel
+    const results = await productModel
       .find({
         $or: [
           { name: { $regex: keyword, $options: "i" } },
@@ -253,12 +253,41 @@ export const searchProductController = async (req, res) => {
         ],
       })
       .select("-photo");
-    res.json(resutls);
+    res.json(results);
   } catch (error) {
     console.log(error);
     res.status(400).send({
       success: false,
       message: "Error In Search Product API",
+      error,
+    });
+  }
+};
+
+//payment
+export const paymentController = async (req, res) => {
+  try {
+    const {cart,id} = req.body;
+    if(!id || !cart)
+    {
+      res.status(400).send({
+        success: false,
+        message: "Invalid Order",
+        error,
+      }); 
+    }
+    let total = 0;
+    cart.map((i) => {
+      total += i.price;
+    });
+    
+    
+
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error In Payment API",
       error,
     });
   }

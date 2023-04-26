@@ -10,6 +10,7 @@ import {
   productListController,
   productCountController,
   searchProductController,
+  paymentController,
 } from "../controllers/productController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 import formidable from "express-formidable";
