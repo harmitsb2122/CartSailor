@@ -44,30 +44,33 @@ const CartPage = () => {
               {`Hello ${auth?.token && auth?.user?.name} ,`}
             </h1>
             <h4 className="text-center">
+              <br />
               {cart?.length
                 ? `You have ${cart.length} items in your cart ${
                     auth?.token ? "" : "please login to checkout"
                   }`
-                : " Your Cart Is Empty"}
+                : " Your Cart is empty"}
             </h4>
           </div>
         </div>
+        <br />
+        <br />
         <div className="row">
           <div className="col-md-8">
             {cart?.map((p) => (
-              <div className="row mb-2 p-3 card flex-row">
+              <div className="row mb-2 p-3 card flex-row bg-dark text-white">
                 <div className="col-md-4">
                   <img
                     src={`${process.env.REACT_APP_API}/api/product/product-photo/${p._id}`}
                     className="card-img-top"
                     alt={p.name}
-                    width="100px"
-                    height={"100px"}
+                    width="200px"
+                    height={"220px"}
                   />
                 </div>
-                <div className="col-md-8">
+                <div className="col-md-8 border border-secondary p-4">
                   <p>{p.name}</p>
-                  <p>{p.description.substring(0, 30)}</p>
+                  <p>{p.description.substring(0, 300)} . . . </p>
                   <p>Price : {p.price}</p>
                   <button
                     className="btn btn-danger"
@@ -84,6 +87,7 @@ const CartPage = () => {
             <p>Checkout</p>
             <hr />
             <h4>Total : {totalPrice()} </h4>
+            <br />
             {auth?.user?.address ? (
               <>
                 <div className="mb-3">

@@ -50,11 +50,11 @@ const PaymentPage = () => {
   };
   return (
     <Layout>
-      <div className="mx-auto w-50 p-3">
+      <div className="mx-auto w-50 p-5">
         <form onSubmit={handleSubmit}>
           <h4 className="title">Payment Details Form</h4>
 
-          <div className="mb-3">
+          <div className="mb-3 p-1">
             <input
               type="text"
               value={name}
@@ -66,7 +66,7 @@ const PaymentPage = () => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="mb-3 p-1">
             <input
               type="text"
               value={cardNumber}
@@ -77,7 +77,7 @@ const PaymentPage = () => {
               required
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-3 p-1">
             <input
               type="text"
               value={cvv}
@@ -88,7 +88,7 @@ const PaymentPage = () => {
               required
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-3 p-1">
             <input
               type="text"
               value={bankId}
@@ -99,8 +99,8 @@ const PaymentPage = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            ORDER
+          <button type="submit" className="btn btn-dark">
+            PAY
           </button>
         </form>
       </div>

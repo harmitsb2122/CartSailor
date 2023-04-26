@@ -53,7 +53,7 @@ app.post("/api/payment", (req, res) => {
         });
         return;
       }
-      if (!result) {
+      if (!result || !result[0]) {
         console.log(userCheck);
         console.log("error invalid order");
         res.status(400).send({
@@ -63,7 +63,7 @@ app.post("/api/payment", (req, res) => {
         });
         return;
       }
-      let rem = result[0].balance - total;
+      const rem = result[0].balance - total;
       const userUpdate = `UPDATE payment_card SET balance=${rem} WHERE card_number='${cardNumber}' AND cvv='${cvv}' AND name='${name}' AND bank_id='${bankId}'`;
 
       db.query(userUpdate, async (err, result) => {

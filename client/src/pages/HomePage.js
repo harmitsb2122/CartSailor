@@ -116,35 +116,44 @@ const HomePage = () => {
   return (
     <Layout>
       <div className="container-fluid row mt-3">
-        <div className="col-md-2">
+        <div className="col-md-2 ">
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
             {categories?.map((c) => (
               <div className="container">
-                <Checkbox
-                  key={c._id}
-                  onChange={(e) => handleFilter(e.target.checked, c._id)}
-                >
-                  {c.name}
-                </Checkbox>
+                <div className="btn-group mt-1" role="group">
+                  <input
+                    type="checkbox"
+                    className="btn-check"
+                    id={c._id}
+                    defaultChecked={false}
+                    onChange={(e) => handleFilter(e.target.checked, c._id)}
+                  />
+                  <label className="btn btn-outline-dark" htmlFor={c._id}>
+                    {c.name}
+                  </label>
+                </div>
               </div>
             ))}
           </div>
           <br />
           <div className="d-flex flex-column">
             <button
-              className="btn btn-primary"
+              className="btn btn-dark text-white"
               onClick={() => window.location.reload()}
             >
               RESET FILTERS
             </button>
           </div>
         </div>
-        <div className="col-md-9">
+        <div className="col-md-8">
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
-              <div className="card m-2" style={{ width: "18rem" }}>
+              <div
+                className="card m-2 border-dark text-white bg-dark"
+                style={{ width: "18rem" }}
+              >
                 <img
                   src={`${process.env.REACT_APP_API}/api/product/product-photo/${p._id}`}
                   className="card-img-top"
@@ -157,7 +166,7 @@ const HomePage = () => {
                   </p>
                   <p className="card-text"> Rs. {p.price}</p>
                   <button
-                    class="btn btn-primary ms-1"
+                    class="btn btn-primary ms-2"
                     onClick={() => {
                       navigate(`/product/${p.slug}`);
                     }}
@@ -165,7 +174,7 @@ const HomePage = () => {
                     More Details
                   </button>
                   <button
-                    class="btn btn-secondary ms-1"
+                    class="btn btn-secondary ms-3"
                     onClick={() => {
                       setCart([...cart, p]);
                       localStorage.setItem(
@@ -181,10 +190,10 @@ const HomePage = () => {
               </div>
             ))}
           </div>
-          <div className="m-2 p-3">
+          <div className="m-3 p-3">
             {products && products.length < total && (
               <button
-                className="btn btn-warning"
+                className="btn btn-warning btn-lg"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);

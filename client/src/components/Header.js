@@ -82,7 +82,7 @@ const Header = () => {
               )}
               <li className="nav-item">
                 <NavLink to="/cart" className="nav-link" href="#">
-                  Cart {cart?.length}
+                  Cart ({cart?.length})
                 </NavLink>
               </li>
             </ul>
