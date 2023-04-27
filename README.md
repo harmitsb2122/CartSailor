@@ -8,6 +8,25 @@ An E-Commerce application which was part of DBMS course project
 
 Link : https://dbdiagram.io/d/643a2e876b31947051a22c7c
 
+## Prereqisites
+1. Nodejs and node package manager
+2. Crate .env as follows:<br>
+Client folder .env file : 
+```
+REACT_APP_API = <server_port>
+```
+Let us say we are running server at http://localhost:3001
+then - 
+```
+REACT_APP_API = http://localhost:3001
+```
+Server folder .env file :
+```
+MONGO_URL = <mongo_url_of_your_cluster>
+JWT_SECRET = <you_jwt_secret>
+PORT = <server_port>
+```
+
 ## Tech-Stack
 #### Database
 1. Mongoose (NoSql Database)
@@ -38,3 +57,33 @@ npm run dev
 ```
 localhost:3001
 ```
+### Demonstration
+Video link - https://drive.google.com/file/d/1i6ZaNkTCh7dS9kf73Nh__gqq39Jc1eR7/view?usp=sharing
+
+### Major functionalities :
+- Database Normalization
+- Both Sql and noSql databases
+- Protected Routing System
+- Extendable design
+
+### Features of the project
+Customer side
+- Search for products
+- View details of products
+- Filter by category
+- Add item to the cart
+- Modify the cart
+- Destination address
+- View Orders
+- Pay for the items (Payment Interface)
+- May have multiple bank account
+- Exception handling when balance is low
+- View status of each order(Tracking system)
+- User Dashboard
+
+Admin side
+- CRUD operation on products
+- CRUD operation on categories (filter)
+- Update order status
+- Admin Dashboard
+
