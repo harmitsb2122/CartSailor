@@ -36,7 +36,7 @@ app.use("/api/product", productRoutes);
 
 app.post("/api/payment", async (req, res) => {
   try {
-    const { name, cardNumber, cvv, bankId, cart, uid } = await req.body;
+    const { name, cardNumber, cvv, bankId, cart, uid } = req.body;
     let total = 0;
     cart.map((i) => {
       total += i.price;
@@ -46,57 +46,69 @@ app.post("/api/payment", async (req, res) => {
     db.query(userCheck, async (err, result) => {
       if (err) {
         console.log("error", err);
-        res.send({
+        return res.send({
           success: false,
           message: "Error In Payment API",
-          err,
+          error: err,
         });
-        return;
       }
       if (!result || !result[0]) {
         console.log(userCheck);
-        console.log("Invaid Credentials");
-        res.send({
+        console.log("Invalid Credentials");
+        return res.send({
           success: false,
           message: "Invalid Credentials",
         });
-        return;
       }
       const rem = result[0].balance - total;
       if (rem < 0) {
         console.log("Balance Insufficient");
-        res.send({
+        return res.send({
           success: false,
           message: "Insufficient Balance",
         });
-        return;
       }
 
       const userUpdate = `UPDATE payment_card SET balance=${rem} WHERE card_number='${cardNumber}' AND cvv='${cvv}' AND name='${name}' AND bank_id='${bankId}'`;
 
       db.query(userUpdate, async (err, result) => {
+        if (err) {
+          console.log("error", err);
+          return res.send({
+            success: false,
+            message: "Error In Payment API",
+            error: err,
+          });
+        }
+
         try {
           const order = await new orderModel({
             products: cart,
             orderTotal: total,
             buyer: uid,
           }).save();
-          res.send({
+
+          return res.send({
             success: true,
             message: "Payment Success",
             balance: rem,
           });
-        } catch {
-          console.log(err);
+        } catch (error) {
+          console.log(error);
+          return res.send({
+            success: false,
+            message: "Error In Payment API",
+            error: error,
+          });
         }
       });
     });
   } catch (error) {
     console.log(error);
-    res.status(400).send({
+    return res.status(400).send({
       success: false,
       message: "Error In Payment API",
-      error,
+      error: error,
     });
   }
 });

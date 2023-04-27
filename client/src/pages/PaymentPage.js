@@ -18,8 +18,8 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   // form function
   const handleSubmit = async (e) => {
-    e.preventDefault();
     setUserId(auth.user._id);
+    e.preventDefault();
     try {
       if (!auth || !auth.token) {
         toast.error("Please Login First");
