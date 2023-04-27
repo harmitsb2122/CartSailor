@@ -87,3 +87,7 @@ Admin side
 - Update order status
 - Admin Dashboard
 
+Common functionalites
+- User registration
+- Password hashing using bcrypt
+- JWT authentication
