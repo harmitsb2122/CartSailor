@@ -42,6 +42,7 @@ const PaymentPage = () => {
         toast.success(`Your current balance is : Rs ${res.data.balance}`);
       } else {
         toast.error(res.data.message);
+        return;
       }
     } catch (error) {
       console.log(error);

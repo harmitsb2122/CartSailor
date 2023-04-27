@@ -34,19 +34,19 @@ app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/product", productRoutes);
 
-app.post("/api/payment", (req, res) => {
+app.post("/api/payment", async (req, res) => {
   try {
-    const { name, cardNumber, cvv, bankId, cart, uid } = req.body;
+    const { name, cardNumber, cvv, bankId, cart, uid } = await req.body;
     let total = 0;
     cart.map((i) => {
       total += i.price;
     });
 
-    const userCheck = `SELECT * FROM payment_card WHERE card_number='${cardNumber}' AND cvv='${cvv}' AND name='${name}' AND bank_id='${bankId}' AND balance>=${total}`;
-    db.query(userCheck, (err, result) => {
+    const userCheck = `SELECT * FROM payment_card WHERE card_number='${cardNumber}' AND cvv='${cvv}' AND name='${name}' AND bank_id='${bankId}'`;
+    db.query(userCheck, async (err, result) => {
       if (err) {
         console.log("error", err);
-        res.status(400).send({
+        res.send({
           success: false,
           message: "Error In Payment API",
           err,
@@ -55,15 +55,23 @@ app.post("/api/payment", (req, res) => {
       }
       if (!result || !result[0]) {
         console.log(userCheck);
-        console.log("error invalid order");
-        res.status(400).send({
+        console.log("Invaid Credentials");
+        res.send({
           success: false,
-          message: "Invalid Order",
-          err: "invalid order",
+          message: "Invalid Credentials",
         });
         return;
       }
       const rem = result[0].balance - total;
+      if (rem < 0) {
+        console.log("Balance Insufficient");
+        res.send({
+          success: false,
+          message: "Insufficient Balance",
+        });
+        return;
+      }
+
       const userUpdate = `UPDATE payment_card SET balance=${rem} WHERE card_number='${cardNumber}' AND cvv='${cvv}' AND name='${name}' AND bank_id='${bankId}'`;
 
       db.query(userUpdate, async (err, result) => {
@@ -73,16 +81,13 @@ app.post("/api/payment", (req, res) => {
             orderTotal: total,
             buyer: uid,
           }).save();
-          res.status(200).send({
+          res.send({
             success: true,
             message: "Payment Success",
             balance: rem,
           });
         } catch {
-          res.status(400).send({
-            success: true,
-            message: "An Error occured in Database",
-          });
+          console.log(err);
         }
       });
     });
@@ -97,15 +102,16 @@ app.post("/api/payment", (req, res) => {
 });
 
 // Inserting into local db
-// app.get("/insertOnce", (req, res) => {
-//   const sqlInsert =
-//     "INSERT INTO payment_card (card_number,cvv,name,bank_id,balance) VALUES ('1111222233334441','121','John','SBIN001',500000)";
-//   db.query(sqlInsert, (err, result) => {
-//     console.log("error", err);
-//     console.log("result", result);
-//   });
-//   res.send("<h1>Data Inserted</h1>");
-// });
+app.get("/insertOnce", (req, res) => {
+  const sqlInsert =
+    "INSERT INTO payment_card (card_number,cvv,name,bank_id,balance) VALUES ('1111222233334442','822','Raghav','SBIN002',400000)";
+
+  db.query(sqlInsert, (err, result) => {
+    console.log("error", err);
+    console.log("result", result);
+  });
+  res.send("<h1>Data Inserted</h1>");
+});
 
 //REST api
 app.get("/", (req, res) => {
