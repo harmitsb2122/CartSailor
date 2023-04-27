@@ -6,7 +6,7 @@ An E-Commerce application which was part of DBMS course project
 ## DB Diagram
 ![image](https://user-images.githubusercontent.com/80470843/234785779-070c2ff7-e6d3-4977-ae64-532be69f6495.png)
 
-Link : https://dbdiagram.io/d/643a2e876b31947051a22c7c
+Link : https://dbdiagram.io/d/644369c76b3194705102483c
 
 ## Prereqisites
 1. Nodejs and node package manager
