@@ -55,7 +55,7 @@ npm run dev
 ```
 4.The frontend application will start at 
 ```
-localhost:3001
+http://localhost:3000
 ```
 ### Demonstration
 Video link - https://drive.google.com/file/d/1i6ZaNkTCh7dS9kf73Nh__gqq39Jc1eR7/view?usp=sharing
