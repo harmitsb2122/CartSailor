@@ -26,6 +26,38 @@ MONGO_URL = <mongo_url_of_your_cluster>
 JWT_SECRET = <you_jwt_secret>
 PORT = <server_port>
 ```
+3. Open mySql and create a schema named "e-commerce" and inside it a table named "payment_card".
+4. The attributes for the table should be as shown in the figure below
+![image](https://user-images.githubusercontent.com/80470843/235202160-59e20ef3-165d-4e82-864e-c7f44caf2dcd.png)
+5. Add details by hitting the endpoint 
+```
+http://localhost:3001/insertOnce
+```
+Change the data inside server/index.js appropriately
+```js
+// Inserting into local db
+app.get("/insertOnce", (req, res) => {
+  const sqlInsert =
+    "INSERT INTO payment_card (card_number,cvv,name,bank_id,balance) VALUES ('1111222233334442','822','John Doe','SBIN001',400000)";
+
+  db.query(sqlInsert, (err, result) => {
+    console.log("error", err);
+    console.log("result", result);
+  });
+  res.send("<h1>Data Inserted</h1>");
+});
+```
+![image](https://user-images.githubusercontent.com/80470843/235202570-c61d1d7b-d753-4cd8-a597-2e398f98b9e8.png)
+
+6. Change the details inside server/index.js with your mySql details
+```js
+const db = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: <your_password>,
+  database: "e-commerce",
+});
+```
 
 ## Tech-Stack
 #### Database
