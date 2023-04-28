@@ -3,8 +3,6 @@
 ## About
 An E-Commerce application which was part of DBMS course project
 
-Video Link : https://drive.google.com/file/d/1i6ZaNkTCh7dS9kf73Nh__gqq39Jc1eR7/view?usp=sharing
-
 ## Tech-Stack
 #### Database
 1. Mongoose (NoSql Database)
