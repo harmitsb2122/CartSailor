@@ -1,7 +1,7 @@
 # E-Commerce-MERN
 
 ## About
-An E-Commerce application which was part of DBMS course project
+An E-Commerce application
 
 ## Tech-Stack
 #### Database
