@@ -1,4 +1,4 @@
-# E-Commerce-MERN
+# CartSailor
 
 ## About
 An E-Commerce application
